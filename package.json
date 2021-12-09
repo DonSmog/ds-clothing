@@ -2,7 +2,7 @@
   "name": "ds-clothing",
   "version": "0.1.0",
   "engines": {
-    "node": "16.13.0",
+    "node": "16.13.1",
     "npm": "8.1.4"
   },
   "scripts": {
