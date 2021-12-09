@@ -9,17 +9,16 @@ const StripeCheckoutButton = ({ price }) => {
     "pk_test_51JkD1gBNukQQb1IyYKEorjWgpOGqdKCSKLsRGhWUSA1ru3mU9kWaH4L3jR70McSrsRLbGCB8LCqFSD7DN5M2o6os00lMVu2Eeg";
 
   const onToken = (token) => {
-    alert("Payment Successful");
     axios({
       url: "payment",
       method: "post",
       data: {
         amount: priceForStripe,
-        token: token,
+        token,
       },
     })
       .then((response) => {
-        alert("Payment Successful");
+        alert("Payment Successful! Thank you for your purchase.");
       })
       .catch((error) => {
         console.log("Payment error: ", JSON.parse(error));
