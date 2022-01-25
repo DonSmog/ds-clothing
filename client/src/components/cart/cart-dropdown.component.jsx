@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 
@@ -13,8 +14,22 @@ const CartDropdown = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (e.target !== ref.current) {
+        dispatch(toggleCartHidden());
+      }
+    };
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [ref]);
+
   return (
-    <div className="cart-dropdown">
+    <div className="cart-dropdown" ref={ref}>
       <div className="cart-items">
         {cartItems.length ? (
           cartItems.map((cartItem) => (

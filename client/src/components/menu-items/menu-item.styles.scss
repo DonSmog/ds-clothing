@@ -9,6 +9,11 @@
   margin: 0 7.5px 15px;
   overflow: hidden;
 
+  // $break-point: 800px;
+  // @media screen and (max-width: $break-point) {
+  //   height: 200px;
+  // }
+
   &:hover {
     cursor: pointer;
 

@@ -14,4 +14,13 @@
     display: flex;
     justify-content: space-between;
   }
+
+  $breakpoint: 800px;
+  @media screen and (max-width: $breakpoint) {
+    .preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 15px;
+    }
+  }
 }
