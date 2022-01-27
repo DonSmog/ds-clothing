@@ -3,6 +3,14 @@
   flex-direction: column;
   width: 380px;
 
+  .eyes {
+    position: absolute;
+    cursor: pointer;
+    font-size: 20px;
+    top: 10px;
+    right: 10px;
+  }
+
   @media screen and (max-width: 800px) {
     width: 100%;
   }

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import FormInput from "../../components/form-input/form-input.component";
 import Button from "../custom-button/custom-button.component";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 import {
   googleSignInStart,
@@ -16,6 +17,8 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
     email: "",
     password: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const { email, password } = userCredentials;
 
@@ -29,6 +32,10 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
     const { value, name } = event.target;
 
     setUserCredentials({ ...userCredentials, [name]: value });
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -47,12 +54,16 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
         />
         <FormInput
           name="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           handleChange={handleChange}
           value={password}
           required
           label="Password"
-        />
+        >
+          <div className="eyes" onClick={handleClickShowPassword}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </div>
+        </FormInput>
         <div className="buttons">
           <Button type="submit">Sign In </Button>
           <Button type="button" onClick={googleSignInStart} isGoogleSignIn>

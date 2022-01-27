@@ -6,6 +6,7 @@ import "./sign-up.styles.scss";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
 import { signUpStart } from "../../redux/user/user.action";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 const SignUp = ({ signUpStart }) => {
   const [userCredentials, setUserCredentials] = useState({
@@ -14,6 +15,9 @@ const SignUp = ({ signUpStart }) => {
     displayName: "",
     confirmPassword: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const { displayName, email, password, confirmPassword } = userCredentials;
 
@@ -32,6 +36,14 @@ const SignUp = ({ signUpStart }) => {
     const { name, value } = event.target;
 
     setUserCredentials({ ...userCredentials, [name]: value });
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
   return (
@@ -58,22 +70,31 @@ const SignUp = ({ signUpStart }) => {
         />
 
         <FormInput
-          type="password"
           name="password"
+          type={showPassword ? "text" : "password"}
+          handleChange={handleChange}
           value={password}
-          onChange={handleChange}
-          label="Password"
           required
-        />
+          label="Password"
+        >
+          <div className="eyes" onClick={handleClickShowPassword}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </div>
+        </FormInput>
 
         <FormInput
-          type="password"
           name="confirmPassword"
+          type={showConfirmPassword ? "text" : "password"}
+          handleChange={handleChange}
           value={confirmPassword}
-          onChange={handleChange}
-          label="Confirm Password"
           required
-        />
+          label="Confirm Password"
+        >
+          <div className="eyes" onClick={handleClickShowConfirmPassword}>
+            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+          </div>
+        </FormInput>
+
         <CustomButton type="submit"> SIGN UP </CustomButton>
       </form>
     </div>
