@@ -17,18 +17,20 @@ const CartDropdown = () => {
   const ref = useRef(null);
 
   useEffect(() => {
-    const handleClick = (e) => {
+    const handleEvents = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
         dispatch(toggleCartHidden());
       }
     };
 
-    document.addEventListener("click", handleClick);
-    document.addEventListener("touchmove", handleClick);
+    document.addEventListener("click", handleEvents);
+    document.addEventListener("touchmove", handleEvents);
+    document.addEventListener("scroll", handleEvents);
 
     return () => {
-      document.removeEventListener("click", handleClick);
-      document.removeEventListener("touchmove", handleClick);
+      document.removeEventListener("click", handleEvents);
+      document.removeEventListener("touchmove", handleEvents);
+      document.removeEventListener("scroll", handleEvents);
     };
   }, [ref]);
 

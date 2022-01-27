@@ -1,6 +1,8 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../redux/user/user.selector";
 
 import {
   selectCartItems,
@@ -8,14 +10,16 @@ import {
 } from "../../redux/cart/cart.selector";
 
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
-
 import StripeCheckoutButton from "../../components/stripe-button/stripe-button.component";
+import Button from "../../components/custom-button/custom-button.component";
 
 import "./checkout.styles.scss";
 
 const CheckoutPage = () => {
   const cartItems = useSelector(selectCartItems);
   const total = useSelector(selectCartTotal);
+  const currentUser = useSelector(selectCurrentUser);
+
   return (
     <div className="checkout-page">
       <div className="checkout-header">
@@ -48,7 +52,13 @@ const CheckoutPage = () => {
         Expiry: 12/25 <br />
         CVV: 478
       </div>
-      <StripeCheckoutButton price={total} />
+      {currentUser ? (
+        <StripeCheckoutButton price={total} />
+      ) : (
+        <Link to="/signin">
+          <Button>SIGN IN TO PAY</Button>
+        </Link>
+      )}
     </div>
   );
 };

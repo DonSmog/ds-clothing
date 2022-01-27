@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { connect } from "react-redux";
 import { addItemToCart } from "../../redux/cart/cart.action";
@@ -8,6 +8,12 @@ import Button from "../custom-button/custom-button.component";
 
 const CollectionItem = ({ item, addItemToCart }) => {
   const { name, price, imageUrl } = item;
+  const [addItem, setAddItem] = useState(false);
+
+  const handleButtonClick = () => {
+    setAddItem(true);
+    addItemToCart(item);
+  };
   return (
     <div className="collection-item">
       <div
@@ -20,8 +26,8 @@ const CollectionItem = ({ item, addItemToCart }) => {
         <span className="name">{name}</span>
         <span className="price">${price}</span>
       </div>
-      <Button onClick={() => addItemToCart(item)} inverted>
-        ADD TO CART
+      <Button onClick={handleButtonClick} inverted>
+        {addItem ? "ITEM ADDED" : "ADD TO CART"}
       </Button>
     </div>
   );
