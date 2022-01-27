@@ -18,18 +18,47 @@ const SignUp = ({ signUpStart }) => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const { displayName, email, password, confirmPassword } = userCredentials;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (password !== confirmPassword) {
+    if (
+      displayName === "" ||
+      email === "" ||
+      password === "" ||
+      confirmPassword === ""
+    ) {
+      setDisabled(true);
+      alert("Please fill in all the fields");
+      setDisabled(false);
+      return;
+    } else if (password.length < 6) {
+      setDisabled(true);
+      alert("Password must be at least 6 characters");
+      setDisabled(false);
+      return;
+    } else if (confirmPassword && password !== confirmPassword) {
+      setDisabled(true);
       alert("Password don't match");
+      setDisabled(false);
+      return;
+    } else if (
+      email !== "" &&
+      (!email.includes("@") || (!email.includes(".") && password !== ""))
+    ) {
+      setDisabled(true);
+      alert("Please input a valid Email");
+      setDisabled(false);
+      return;
+    } else {
+      setDisabled(true);
+      signUpStart({ displayName, email, password });
+      setDisabled(false);
       return;
     }
-
-    signUpStart({ displayName, email, password });
   };
 
   const handleChange = (event) => {
@@ -95,7 +124,9 @@ const SignUp = ({ signUpStart }) => {
           </div>
         </FormInput>
 
-        <CustomButton type="submit"> SIGN UP </CustomButton>
+        <CustomButton type="submit" onClick={handleSubmit} disabled={disabled}>
+          SIGN UP
+        </CustomButton>
       </form>
     </div>
   );

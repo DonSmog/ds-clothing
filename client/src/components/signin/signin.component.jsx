@@ -19,13 +19,47 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const { email, password } = userCredentials;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    emailSignInStart(email, password);
+    if (email === "" && password === "") {
+      setDisabled(true);
+      alert("Please fill in all the fields");
+      setDisabled(false);
+      return;
+    } else if (
+      email !== "" &&
+      (!email.includes("@") || (!email.includes(".") && password !== ""))
+    ) {
+      setDisabled(true);
+      alert("Please input a valid Email");
+      setDisabled(false);
+      return;
+    } else if (email !== "" && password === "") {
+      setDisabled(true);
+      alert("Please input your Password");
+      setDisabled(false);
+      return;
+    } else if (email === "" && password !== "") {
+      setDisabled(true);
+      alert("Please input your Email");
+      setDisabled(false);
+      return;
+    } else if (password.length < 6) {
+      setDisabled(true);
+      alert("Password must be at least 6 characters");
+      setDisabled(false);
+      return;
+    } else {
+      setDisabled(true);
+      emailSignInStart(email, password);
+      setDisabled(false);
+      return;
+    }
   };
 
   const handleChange = (event) => {
@@ -43,7 +77,7 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
       <h2>I aleady have an account</h2>
       <span>Sign-in with your email and password.</span>
 
-      <form onSubmit={handleSubmit}>
+      <form>
         <FormInput
           name="email"
           type="email"
@@ -65,7 +99,9 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
           </div>
         </FormInput>
         <div className="buttons">
-          <Button type="submit">Sign In </Button>
+          <Button type="submit" onClick={handleSubmit} disabled={disabled}>
+            Sign In
+          </Button>
           <Button type="button" onClick={googleSignInStart} isGoogleSignIn>
             Sign In with Google
           </Button>
