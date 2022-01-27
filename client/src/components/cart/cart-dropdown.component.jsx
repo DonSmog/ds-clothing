@@ -18,11 +18,13 @@ const CartDropdown = () => {
 
   useEffect(() => {
     const handleClick = (e) => {
-      if (e.target !== ref.current) {
+      if (ref.current && !ref.current.contains(e.target)) {
         dispatch(toggleCartHidden());
       }
     };
+
     document.addEventListener("click", handleClick);
+
     return () => {
       document.removeEventListener("click", handleClick);
     };
