@@ -24,9 +24,11 @@ const CartDropdown = () => {
     };
 
     document.addEventListener("click", handleClick);
+    document.addEventListener("touchmove", handleClick);
 
     return () => {
       document.removeEventListener("click", handleClick);
+      document.removeEventListener("touchmove", handleClick);
     };
   }, [ref]);
 
