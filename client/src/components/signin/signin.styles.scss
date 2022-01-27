@@ -29,4 +29,15 @@
     top: 10px;
     right: 10px;
   }
+
+  .login-test {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 24px;
+    color: red;
+
+    @media screen and (max-width: 800px) {
+      font-size: 20px;
+    }
+  }
 }

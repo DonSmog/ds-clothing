@@ -71,6 +71,13 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
           </Button>
         </div>
       </form>
+      <div className="login-test">
+        *You can use this details to test the login*
+        <br />
+        Email: test14@test.com
+        <br />
+        Password: 123456789
+      </div>
     </div>
   );
 };
