@@ -41,6 +41,6 @@ export const ModalContainer = styled.div`
 
   @media screen and (max-width: 800px) {
     top: 2vh;
-    left: 40vw;
+    left: 33vw;
   }
 `;
