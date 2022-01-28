@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { GlobalStyle } from "./GlobalStyles";
+import Spinner from "./components/spinner/spinner.component";
 
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { checkUserSession } from "./redux/user/user.action";
 
-import Homepage from "./pages/homepage/homepage.component";
-import Shop from "./pages/shop/shop.component";
-import Signs from "./pages/signs/signin_and_signup.component";
-import CheckoutPage from "./pages/checkout/checkout.component";
-
 import Header from "./components/header/header.component";
+const Homepage = lazy(() => import("./pages/homepage/homepage.component"));
+const Shop = lazy(() => import("./pages/shop/shop.component"));
+const Signs = lazy(() => import("./pages/signs/signin_and_signup.component"));
+const CheckoutPage = lazy(() => import("./pages/checkout/checkout.component"));
 
 const App = () => {
   const currentUser = useSelector(selectCurrentUser);
@@ -26,14 +26,16 @@ const App = () => {
       <GlobalStyle />
       <Header />
       <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route path="/shop" component={Shop} />
-        <Route exact path="/checkout" component={CheckoutPage} />
-        <Route
-          exact
-          path="/signin"
-          render={() => (currentUser ? <Redirect to="/" /> : <Signs />)}
-        />
+        <Suspense fallback={<Spinner />}>
+          <Route exact path="/" component={Homepage} />
+          <Route path="/shop" component={Shop} />
+          <Route exact path="/checkout" component={CheckoutPage} />
+          <Route
+            exact
+            path="/signin"
+            render={() => (currentUser ? <Redirect to="/" /> : <Signs />)}
+          />
+        </Suspense>
       </Switch>
     </div>
   );
