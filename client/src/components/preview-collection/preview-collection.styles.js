@@ -27,3 +27,20 @@ export const PreviewContainer = styled.div`
     grid-gap: 25px;
   }
 `;
+
+export const ModalContainer = styled.div`
+  position: fixed;
+  left: 46.5vw;
+  top: 5vh;
+  color: red;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: black;
+  padding: 0.2rem 1rem;
+  z-index: 1;
+
+  @media screen and (max-width: 800px) {
+    top: 2vh;
+    left: 40vw;
+  }
+`;

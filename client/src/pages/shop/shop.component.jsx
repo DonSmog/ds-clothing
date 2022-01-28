@@ -14,6 +14,7 @@ const Shop = ({ fetchCollectionsStart, match }) => {
 
   return (
     <div className="shop-page">
+      {/* {modalOpen ? <div className="modal">Item Added!</div> : null} */}
       <Route
         exact
         path={`${match.path}`}

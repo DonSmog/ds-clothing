@@ -31,13 +31,13 @@ const StripeCheckoutButton = ({ price }) => {
   return (
     <StripeCheckout
       label="Pay Now"
+      panelLabel="Pay Now"
       name="DonSmog Cloths"
       billingAddress
       shippingAddress
       image="https://svgshare.com/i/CUz.svg"
       description={`Your total is $${price}`}
       amount={priceForStripe}
-      panelLabel="Pay Now"
       token={onToken}
       stripeKey={publishableKey}
     />

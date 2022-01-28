@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import FormInput from "../../components/form-input/form-input.component";
 import Button from "../custom-button/custom-button.component";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import PulseLoader from "react-spinners/PulseLoader";
 
 import {
   googleSignInStart,
@@ -19,47 +20,54 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const [emailDisabled, setEmailDisabled] = useState(false);
+  const [googleDisabled, setGoogleDisabled] = useState(false);
 
   const { email, password } = userCredentials;
 
-  const handleSubmit = async (event) => {
+  const handleEmailSubmit = async (event) => {
     event.preventDefault();
 
     if (email === "" && password === "") {
-      setDisabled(true);
+      setEmailDisabled(true);
       alert("Please fill in all the fields");
-      setDisabled(false);
+      setEmailDisabled(false);
       return;
     } else if (
       email !== "" &&
       (!email.includes("@") || (!email.includes(".") && password !== ""))
     ) {
-      setDisabled(true);
+      setEmailDisabled(true);
       alert("Please input a valid Email");
-      setDisabled(false);
+      setEmailDisabled(false);
       return;
     } else if (email !== "" && password === "") {
-      setDisabled(true);
+      setEmailDisabled(true);
       alert("Please input your Password");
-      setDisabled(false);
+      setEmailDisabled(false);
       return;
     } else if (email === "" && password !== "") {
-      setDisabled(true);
+      setEmailDisabled(true);
       alert("Please input your Email");
-      setDisabled(false);
+      setEmailDisabled(false);
       return;
     } else if (password.length < 6) {
-      setDisabled(true);
+      setEmailDisabled(true);
       alert("Password must be at least 6 characters");
-      setDisabled(false);
+      setEmailDisabled(false);
       return;
     } else {
-      setDisabled(true);
+      setEmailDisabled(true);
       emailSignInStart(email, password);
-      setDisabled(false);
       return;
     }
+  };
+
+  const handleGoogleSubmit = async (event) => {
+    event.preventDefault();
+
+    setGoogleDisabled(true);
+    googleSignInStart();
   };
 
   const handleChange = (event) => {
@@ -99,11 +107,24 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
           </div>
         </FormInput>
         <div className="buttons">
-          <Button type="submit" onClick={handleSubmit} disabled={disabled}>
-            Sign In
+          <Button
+            type="submit"
+            onClick={handleEmailSubmit}
+            disabled={emailDisabled || googleDisabled}
+          >
+            {emailDisabled ? <PulseLoader color="#fff" /> : "Sign In"}
           </Button>
-          <Button type="button" onClick={googleSignInStart} isGoogleSignIn>
-            Sign In with Google
+          <Button
+            type="button"
+            disabled={googleDisabled || emailDisabled}
+            onClick={handleGoogleSubmit}
+            isGoogleSignIn
+          >
+            {googleDisabled ? (
+              <PulseLoader color="#fff" />
+            ) : (
+              "Sign In with Google"
+            )}
           </Button>
         </div>
       </form>

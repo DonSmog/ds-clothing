@@ -8,6 +8,8 @@ import {
   signOutFailure,
   signUpSuccess,
   signUpFailure,
+  paymentSuccess,
+  paymentFailure,
 } from "./user.action";
 import {
   auth,
@@ -27,7 +29,7 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
   } catch (error) {
     yield put(signInFailure(error));
-    alert("Incorrect credentials. Please Signup if you don't have an account");
+    alert("Sorry! Unable to create your account. Please try again.");
   }
 }
 
@@ -70,6 +72,14 @@ export function* signOut() {
   }
 }
 
+export function* paymentSuccessful() {
+  try {
+    yield put(paymentSuccess());
+  } catch (error) {
+    yield put(paymentFailure(error));
+  }
+}
+
 export function* signUp({ payload: { displayName, email, password } }) {
   try {
     const { user } = yield auth.createUserWithEmailAndPassword(email, password);
@@ -99,6 +109,10 @@ export function* onSignOutStart() {
   yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
 }
 
+export function* onPaymentStart() {
+  yield takeLatest(UserActionTypes.PAYMENT_START, paymentSuccessful);
+}
+
 export function* onSignUpStart() {
   yield takeLatest(UserActionTypes.SIGN_UP_START, signUp);
 }
@@ -115,5 +129,6 @@ export function* userSagas() {
     call(onSignOutStart),
     call(onSignUpStart),
     call(onSignUpSuccess),
+    call(onPaymentStart),
   ]);
 }
