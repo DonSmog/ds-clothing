@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState } from "react";
 import "./signin.styles.scss";
 
@@ -11,6 +12,8 @@ import PulseLoader from "react-spinners/PulseLoader";
 import {
   googleSignInStart,
   emailSignInStart,
+  // signInSuccess,
+  signInFailure,
 } from "../../redux/user/user.action";
 
 const SignIn = ({ emailSignInStart, googleSignInStart }) => {
@@ -24,6 +27,23 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
   const [googleDisabled, setGoogleDisabled] = useState(false);
 
   const { email, password } = userCredentials;
+
+  const checkEmailSignInSuccess = () =>
+    setTimeout(() => {
+      if (signInFailure()) {
+        setEmailDisabled(false);
+      } else {
+        setEmailDisabled(true);
+      }
+    }, 5000);
+
+  const checkGoogleSignInSuccess = () =>
+    setTimeout(() => {
+      console.log("Checking SignIn Success/Failure");
+      if (signInFailure()) {
+        setGoogleDisabled(false);
+      }
+    }, 10000);
 
   const handleEmailSubmit = async (event) => {
     event.preventDefault();
@@ -59,6 +79,8 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
     } else {
       setEmailDisabled(true);
       emailSignInStart(email, password);
+
+      checkEmailSignInSuccess();
       return;
     }
   };
@@ -68,6 +90,7 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
 
     setGoogleDisabled(true);
     googleSignInStart();
+    checkGoogleSignInSuccess();
   };
 
   const handleChange = (event) => {
@@ -112,7 +135,7 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
             onClick={handleEmailSubmit}
             disabled={emailDisabled || googleDisabled}
           >
-            {emailDisabled ? <PulseLoader color="#fff" /> : "Sign In"}
+            {emailDisabled ? <PulseLoader size="10" color="#fff" /> : "Sign In"}
           </Button>
           <Button
             type="button"
@@ -121,7 +144,7 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
             isGoogleSignIn
           >
             {googleDisabled ? (
-              <PulseLoader color="#fff" />
+              <PulseLoader size="10" color="#fff" />
             ) : (
               "Sign In with Google"
             )}
@@ -141,6 +164,7 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   googleSignInStart: () => dispatch(googleSignInStart()),
+  // signInSuccess: () => dispatch(signInSuccess()),
   emailSignInStart: (email, password) =>
     dispatch(emailSignInStart({ email, password })),
 });
