@@ -39,7 +39,6 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
 
   const checkGoogleSignInSuccess = () =>
     setTimeout(() => {
-      console.log("Checking SignIn Success/Failure");
       if (signInFailure()) {
         setGoogleDisabled(false);
       }
@@ -135,7 +134,11 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
             onClick={handleEmailSubmit}
             disabled={emailDisabled || googleDisabled}
           >
-            {emailDisabled ? <PulseLoader size="10" color="#fff" /> : "Sign In"}
+            {emailDisabled ? (
+              <PulseLoader size="10px" color="#fff" />
+            ) : (
+              "Sign In"
+            )}
           </Button>
           <Button
             type="button"
@@ -144,7 +147,7 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
             isGoogleSignIn
           >
             {googleDisabled ? (
-              <PulseLoader size="10" color="#fff" />
+              <PulseLoader size="10px" color="#fff" />
             ) : (
               "Sign In with Google"
             )}
