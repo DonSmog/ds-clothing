@@ -25,6 +25,7 @@ const Header = ({ currentUser, hidden, signOutStart }) => {
         <Logo className="logo" title="DonSmog Clothings" />
       </LogoContainer>
       <OptionsContainer>
+        <OptionLink to="/">HOME</OptionLink>
         <OptionLink to="/shop">SHOP</OptionLink>
         {currentUser ? (
           <OptionLink to={`/profile/${currentUser.id}`}>

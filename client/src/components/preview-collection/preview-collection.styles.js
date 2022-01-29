@@ -7,6 +7,7 @@ export const CollectionPreviewContainer = styled.div`
 
   @media screen and (max-width: 800px) {
     align-items: center;
+    margin-bottom: 15px;
   }
 `;
 

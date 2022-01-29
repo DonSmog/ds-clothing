@@ -1,5 +1,5 @@
 $breakpoint: 800px;
-$breakpoint-sm: 324px;
+$breakpoint-sm: 414px;
 
 .collection-item {
   width: 22vw;
@@ -8,6 +8,10 @@ $breakpoint-sm: 324px;
   height: 350px;
   align-items: center;
   position: relative;
+
+  @media screen and (max-width: $breakpoint-sm) {
+    height: 250px;
+  }
 
   .image {
     width: 100%;
@@ -33,6 +37,7 @@ $breakpoint-sm: 324px;
 
     @media screen and (max-width: $breakpoint-sm) {
       padding: 0 5px;
+      top: 170px;
     }
   }
 

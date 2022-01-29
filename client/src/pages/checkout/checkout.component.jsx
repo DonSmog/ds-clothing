@@ -45,13 +45,9 @@ const CheckoutPage = () => {
       <div className="total">
         <span>TOTAL: ${total}</span>
       </div>
-      <div className="test-warning">
-        *Please use the following test credit card for payments*
-        <br />
-        Card Number: 5555 5555 5555 4444 <br />
-        Expiry: 12/25 <br />
-        CVV: 478
-      </div>
+      <Link to="/shop">
+        <Button>Continue Shopping</Button>
+      </Link>
       {currentUser ? (
         <StripeCheckoutButton price={total} />
       ) : (
@@ -59,6 +55,13 @@ const CheckoutPage = () => {
           <Button>SIGN IN TO PAY</Button>
         </Link>
       )}
+      <div className="test-warning">
+        *Please use the following test credit card for payments*
+        <br />
+        Card Number: 5555 5555 5555 4444 <br />
+        Expiry: 12/25 <br />
+        CVV: 478
+      </div>
     </div>
   );
 };
