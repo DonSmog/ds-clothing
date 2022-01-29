@@ -5,8 +5,9 @@ import { connect } from "react-redux";
 import "./sign-up.styles.scss";
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
-import { signUpStart } from "../../redux/user/user.action";
+import { signUpStart, signUpFailure } from "../../redux/user/user.action";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const SignUp = ({ signUpStart }) => {
   const [userCredentials, setUserCredentials] = useState({
@@ -21,6 +22,15 @@ const SignUp = ({ signUpStart }) => {
   const [disabled, setDisabled] = useState(false);
 
   const { displayName, email, password, confirmPassword } = userCredentials;
+
+  const checkSignUpSuccess = () =>
+    setTimeout(() => {
+      if (signUpFailure()) {
+        setDisabled(false);
+      } else {
+        setDisabled(true);
+      }
+    }, 5000);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -56,7 +66,7 @@ const SignUp = ({ signUpStart }) => {
     } else {
       setDisabled(true);
       signUpStart({ displayName, email, password });
-      setDisabled(false);
+      checkSignUpSuccess();
       return;
     }
   };
@@ -125,7 +135,7 @@ const SignUp = ({ signUpStart }) => {
         </FormInput>
 
         <CustomButton type="submit" onClick={handleSubmit} disabled={disabled}>
-          SIGN UP
+          {disabled ? <PulseLoader size="10px" color="#fff" /> : "SIGN UP"}
         </CustomButton>
       </form>
     </div>

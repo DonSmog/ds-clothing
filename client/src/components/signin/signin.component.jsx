@@ -12,7 +12,6 @@ import PulseLoader from "react-spinners/PulseLoader";
 import {
   googleSignInStart,
   emailSignInStart,
-  // signInSuccess,
   signInFailure,
 } from "../../redux/user/user.action";
 
@@ -41,6 +40,8 @@ const SignIn = ({ emailSignInStart, googleSignInStart }) => {
     setTimeout(() => {
       if (signInFailure()) {
         setGoogleDisabled(false);
+      } else {
+        setGoogleDisabled(true);
       }
     }, 10000);
 
