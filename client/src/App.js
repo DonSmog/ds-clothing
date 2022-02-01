@@ -25,12 +25,12 @@ const App = () => {
 
   return (
     <div>
-      <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => {
-        window.location.reload(false);
-      }} >
       <GlobalStyle />
       <Header />
       <Switch>
+      <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => {
+        window.location.reload(false);
+      }} >
         <Suspense fallback={<Spinner />}>
           <Route exact path="/" component={Homepage} />
           <Route path="/shop" component={Shop} />
@@ -41,8 +41,8 @@ const App = () => {
             render={() => (currentUser ? <Redirect to="/" /> : <Signs />)}
           />
         </Suspense>
-      </Switch>
     </ErrorBoundary>
+      </Switch>
     </div>
   );
 };

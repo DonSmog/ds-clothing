@@ -1,11 +1,13 @@
 import React from 'react';
+import {ErrorImageOverlay, ErrorImageContainer, ErrorImageText} from './errors.styles';
 
 const ErrorFallback = ({error, resetErrorBoundary}) => {
-  return <div role='alert'>
-      <p>Something went wrong:</p>
+  return <ErrorImageOverlay role='alert'>
+      <ErrorImageContainer imageUrl="https://i.imgur.com/oCkEbrA.png" />
         <pre>{error.message}</pre>
+        <ErrorImageText>Sorry, you seem to be lost!</ErrorImageText>
         <button onClick={resetErrorBoundary}>Try Again</button>
-  </div>;
+  </ErrorImageOverlay>;
 };
 
 export default ErrorFallback;
