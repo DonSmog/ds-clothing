@@ -1,8 +1,10 @@
 import React, { useEffect, lazy, Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import {ErrorBoundary} from 'react-error-boundary'
 import { GlobalStyle } from "./GlobalStyles";
 import Spinner from "./components/spinner/spinner.component";
+import ErrorFallback from "./components/error-boundary/error-fallback.component";
 
 import { selectCurrentUser } from "./redux/user/user.selector";
 import { checkUserSession } from "./redux/user/user.action";
@@ -23,6 +25,9 @@ const App = () => {
 
   return (
     <div>
+      <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => {
+        window.location.reload(false);
+      }} >
       <GlobalStyle />
       <Header />
       <Switch>
@@ -37,6 +42,7 @@ const App = () => {
           />
         </Suspense>
       </Switch>
+    </ErrorBoundary>
     </div>
   );
 };
